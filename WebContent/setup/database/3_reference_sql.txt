@@ -1,0 +1,290 @@
+alter table cms_ad add constraint fk_cms_ad_adslot foreign key (f_adslot_id)
+      references cms_ad_slot (f_adslot_id) on delete restrict on update restrict;
+
+alter table cms_ad add constraint fk_cms_ad_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_ad_slot add constraint fk_cms_adslot_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_attribute add constraint fk_cms_attribute_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_comment add constraint fk_cms_comment_auditor foreign key (f_auditor_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_comment add constraint fk_cms_comment_creator foreign key (f_creator_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_comment add constraint fk_cms_comment_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_friendlink add constraint fk_cms_friendlink_friendlinktype foreign key (f_friendlinktype_id)
+      references cms_friendlink_type (f_friendlinktype_id) on delete restrict on update restrict;
+
+alter table cms_friendlink add constraint fk_cms_friendlink_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_friendlink_type add constraint fk_cms_friendlinktype_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_global_custom add constraint fk_cms_globalcustom_global foreign key (f_global_id)
+      references cms_global (f_global_id) on delete restrict on update restrict;
+
+alter table cms_guestbook add constraint fk_cms_guestbook_creator foreign key (f_creator_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_guestbook add constraint fk_cms_guestbook_guestbooktype foreign key (f_guestbooktype_id)
+      references cms_guestbook_type (f_guestbooktype_id) on delete restrict on update restrict;
+
+alter table cms_guestbook add constraint fk_cms_guestbook_replyer foreign key (f_replyer_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_guestbook add constraint fk_cms_guestbook_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_guestbook_type add constraint fk_cms_guestbooktype_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_info add constraint fk_cms_info_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_info add constraint fk_cms_info_org foreign key (f_org_id)
+      references cms_org (f_org_id) on delete restrict on update restrict;
+
+alter table cms_info add constraint fk_cms_info_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_info add constraint fk_cms_info_user_creator foreign key (f_creator_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_info_attribute add constraint fk_cms_infoattr_attribute foreign key (f_attribute_id)
+      references cms_attribute (f_attribute_id) on delete restrict on update restrict;
+
+alter table cms_info_attribute add constraint fk_cms_infoattr_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_buffer add constraint fk_cms_infobuffer_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_clob add constraint fk_cms_infoclob_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_custom add constraint fk_cms_infocustom_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_detail add constraint fk_cms_infodetail_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_file add constraint fk_cms_infofile_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_image add constraint fk_cms_infoimage_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_node add constraint fk_cms_infonode_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_node add constraint fk_cms_infonode_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_info_special add constraint fk_cms_infospecial_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_special add constraint fk_cms_infospecial_special foreign key (f_special_id)
+      references cms_special (f_special_id) on delete restrict on update restrict;
+
+alter table cms_info_tag add constraint fk_cms_infotag_info foreign key (f_info_id)
+      references cms_info (f_info_id) on delete restrict on update restrict;
+
+alter table cms_info_tag add constraint fk_cms_infotag_tag foreign key (f_tag_id)
+      references cms_tag (f_tag_id) on delete restrict on update restrict;
+
+alter table cms_membergroup_site add constraint fk_cms_memgroupsite_memgroup foreign key (f_membergroup_id)
+      references cms_member_group (f_membergroup_id) on delete restrict on update restrict;
+
+alter table cms_membergroup_site add constraint fk_cms_memgroupsite_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_memgroupnode_contri add constraint fk_cms_mgroupncontri_memgroup foreign key (f_memgroupsite_id)
+      references cms_membergroup_site (f_memgroupsite_id) on delete restrict on update restrict;
+
+alter table cms_memgroupnode_contri add constraint fk_cms_mgroupncontri_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_memgroupnode_view add constraint fk_cms_mgroupnview_memgroup foreign key (f_memgroupsite_id)
+      references cms_membergroup_site (f_memgroupsite_id) on delete restrict on update restrict;
+
+alter table cms_memgroupnode_view add constraint fk_cms_mgroupnview_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_model add constraint fk_cms_model_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_model_custom add constraint fk_cms_modelcustom_model foreign key (f_model_id)
+      references cms_model (f_model_id) on delete restrict on update restrict;
+
+alter table cms_model_field add constraint fk_cms_modefiel_model foreign key (f_model_id)
+      references cms_model (f_model_id) on delete restrict on update restrict;
+
+alter table cms_model_field_custom add constraint fk_cms_modfiecus_modefiel foreign key (f_modefiel_id)
+      references cms_model_field (f_modefiel_id) on delete restrict on update restrict;
+
+alter table cms_node add constraint fk_cms_node_model_info foreign key (f_info_model_id)
+      references cms_model (f_model_id) on delete restrict on update restrict;
+
+alter table cms_node add constraint fk_cms_node_model_node foreign key (f_node_model_id)
+      references cms_model (f_model_id) on delete restrict on update restrict;
+
+alter table cms_node add constraint fk_cms_node_parent foreign key (f_parent_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_node add constraint fk_cms_node_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_node add constraint fk_cms_node_user_creator foreign key (f_creator_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_node add constraint fk_cms_node_workflow foreign key (f_workflow_id)
+      references cms_workflow (f_workflow_id) on delete restrict on update restrict;
+
+alter table cms_node_buffer add constraint fk_cms_nodebuffer_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_node_clob add constraint fk_cms_nodeclob_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_node_custom add constraint fk_cms_nodecustom_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_node_detail add constraint fk_cms_nodedetail_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_org add constraint fk_cms_org_parent foreign key (f_parent_id)
+      references cms_org (f_org_id) on delete restrict on update restrict;
+
+alter table cms_role add constraint fk_cms_role_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_role_site add constraint fk_cms_rolesite_role foreign key (f_role_id)
+      references cms_role (f_role_id) on delete restrict on update restrict;
+
+alter table cms_role_site add constraint fk_cms_rolesite_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_rolenode_info add constraint fk_cms_roleninfo_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_rolenode_info add constraint fk_cms_roleninfo_role foreign key (f_rolesite_id)
+      references cms_role_site (f_rolesite_id) on delete restrict on update restrict;
+
+alter table cms_rolenode_node add constraint fk_cms_rolennode_node foreign key (f_node_id)
+      references cms_node (f_node_id) on delete restrict on update restrict;
+
+alter table cms_rolenode_node add constraint fk_cms_rolennode_role foreign key (f_rolesite_id)
+      references cms_role_site (f_rolesite_id) on delete restrict on update restrict;
+
+alter table cms_score_board add constraint fk_cms_scoreboard_scoreitem foreign key (f_scoreitem_id)
+      references cms_score_item (f_scoreitem_id) on delete restrict on update restrict;
+
+alter table cms_score_group add constraint fk_cms_scoregroup_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_score_item add constraint fk_cms_scoreitem_scoregroup foreign key (f_scoregroup_id)
+      references cms_score_group (f_scoregroup_id) on delete restrict on update restrict;
+
+alter table cms_score_item add constraint fk_cms_scoreitem_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_site add constraint fk_cms_site_global foreign key (f_global_id)
+      references cms_global (f_global_id) on delete restrict on update restrict;
+
+alter table cms_site add constraint fk_cms_site_org foreign key (f_org_id)
+      references cms_org (f_org_id) on delete restrict on update restrict;
+
+alter table cms_site add constraint fk_cms_site_parent foreign key (f_parent_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_site_custom add constraint fk_cms_sitecustom_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_special add constraint fk_cms_special_creator foreign key (f_creator_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_special add constraint fk_cms_special_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_special add constraint fk_cms_special_speccate foreign key (f_speccate_id)
+      references cms_special_category (f_speccate_id) on delete restrict on update restrict;
+
+alter table cms_special_category add constraint fk_cms_speccategory_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_special_custom add constraint fk_cms_specialcustom_special foreign key (f_special_id)
+      references cms_special (f_special_id) on delete restrict on update restrict;
+
+alter table cms_tag add constraint fk_cms_tag_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_user add constraint fk_cms_user_membergroup foreign key (f_membergroup_id)
+      references cms_member_group (f_membergroup_id) on delete restrict on update restrict;
+
+alter table cms_user add constraint fk_cms_user_org foreign key (f_org_id)
+      references cms_org (f_org_id) on delete restrict on update restrict;
+
+alter table cms_user_detail add constraint fk_cms_userdetail_user foreign key (f_user_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_user_role add constraint fk_cms_userrole_role foreign key (f_role_id)
+      references cms_role (f_role_id) on delete restrict on update restrict;
+
+alter table cms_user_role add constraint fk_cms_userrole_user foreign key (f_user_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_vote add constraint fk_cms_vote_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_vote_option add constraint fk_cms_voteoption_vote foreign key (f_vote_id)
+      references cms_vote (f_vote_id) on delete restrict on update restrict;
+
+alter table cms_workflow add constraint fk_cms_workflow_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_workflow add constraint fk_cms_workflow_workflowgroup foreign key (f_workflowgroup_id)
+      references cms_workflow_group (f_workflowgroup_id) on delete restrict on update restrict;
+
+alter table cms_workflow_group add constraint fk_cms_workflowgroup_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_workflow_log add constraint fk_cms_workflowlog_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_workflow_log add constraint fk_cms_workflowlog_user foreign key (f_user_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_workflow_log add constraint fk_cms_workflowlog_wfprocess foreign key (f_workflowprocess_id)
+      references cms_workflow_process (f_workflowprocess_id) on delete restrict on update restrict;
+
+alter table cms_workflow_process add constraint fk_cms_workflowproc_site foreign key (f_site_id)
+      references cms_site (f_site_id) on delete restrict on update restrict;
+
+alter table cms_workflow_process add constraint fk_cms_workflowproc_user foreign key (f_user_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_workflow_process add constraint fk_cms_workflowproc_workflow foreign key (f_workflow_id)
+      references cms_workflow (f_workflow_id) on delete restrict on update restrict;
+
+alter table cms_workflow_step add constraint fk_cms_workflowstep_workflow foreign key (f_workflow_id)
+      references cms_workflow (f_workflow_id) on delete restrict on update restrict;
+
+alter table cms_workflowprocess_user add constraint fk_cms_wfpuser_user foreign key (f_user_id)
+      references cms_user (f_user_id) on delete restrict on update restrict;
+
+alter table cms_workflowprocess_user add constraint fk_cms_wfpuser_wfprocess foreign key (f_workflowprocess_id)
+      references cms_workflow_process (f_workflowprocess_id) on delete restrict on update restrict;
+
+alter table cms_workflowstep_role add constraint fk_cms_wfsteprole_role foreign key (f_role_id)
+      references cms_role (f_role_id) on delete restrict on update restrict;
+
+alter table cms_workflowstep_role add constraint fk_cms_wfsteprole_wfstep foreign key (f_workflowstep_id)
+      references cms_workflow_step (f_workflowstep_id) on delete restrict on update restrict;

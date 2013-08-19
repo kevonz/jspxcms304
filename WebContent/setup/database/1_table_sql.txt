@@ -1,0 +1,1157 @@
+/*==============================================================*/
+/* Table: cms_ad                                                */
+/*==============================================================*/
+create table cms_ad
+(
+   f_ad_id              int not null,
+   f_site_id            int not null,
+   f_adslot_id          int not null,
+   f_name               varchar(150) not null comment '名称',
+   f_begin_date         datetime comment '开始时间',
+   f_end_date           datetime comment '结束时间',
+   f_url                varchar(255) comment '广告url',
+   f_text               varchar(255) comment '文字',
+   f_script             longtext comment '代码',
+   f_image              varchar(255) comment '图片',
+   f_flash              varchar(255) comment 'flash',
+   f_seq                int not null default 1 comment '排序',
+   primary key (f_ad_id)
+)
+engine = innodb;
+
+alter table cms_ad comment '广告表';
+
+/*==============================================================*/
+/* Table: cms_ad_slot                                           */
+/*==============================================================*/
+create table cms_ad_slot
+(
+   f_adslot_id          int not null,
+   f_site_id            int not null,
+   f_name               varchar(100) not null comment '名称',
+   f_number             varchar(100) comment '编码',
+   f_description        varchar(255) comment '描述',
+   f_type               int not null comment '类型(1:文字,2:图片,3:FLASH,4:代码)',
+   f_template           varchar(255) not null comment '模板',
+   f_width              int not null comment '宽度',
+   f_height             int not null comment '高度',
+   primary key (f_adslot_id)
+)
+engine = innodb;
+
+alter table cms_ad_slot comment '广告版位表';
+
+/*==============================================================*/
+/* Table: cms_attribute                                         */
+/*==============================================================*/
+create table cms_attribute
+(
+   f_attribute_id       int not null,
+   f_site_id            int not null comment '站点',
+   f_number             varchar(20) not null comment '编码',
+   f_name               varchar(50) not null comment '名称',
+   f_seq                int not null default 2147483647 comment '排序',
+   f_is_with_image      char(1) not null default '0' comment '是否包含图片',
+   f_image_width        int comment '图片宽度',
+   f_image_height       int comment '图片高度',
+   primary key (f_attribute_id)
+)
+engine = innodb;
+
+alter table cms_attribute comment '属性表';
+
+/*==============================================================*/
+/* Table: cms_comment                                           */
+/*==============================================================*/
+create table cms_comment
+(
+   f_comment_id         int not null,
+   f_site_id            int not null,
+   f_creator_id         int not null comment '创建人',
+   f_auditor_id         int comment '审核人',
+   f_ftype              varchar(50) not null comment '外表标识',
+   f_fid                int not null comment '外表ID',
+   f_creation_date      datetime not null comment '评论时间',
+   f_audit_date         datetime comment '审核时间',
+   f_ip                 varchar(100) not null default '127.0.0.1' comment 'IP地址',
+   f_score              int not null default 0 comment '得分',
+   f_status             int not null default 0 comment '0:未审核;1:已审核;2:推荐;3:屏蔽',
+   f_text               longtext,
+   primary key (f_comment_id)
+)
+engine = innodb;
+
+alter table cms_comment comment '评论表';
+
+/*==============================================================*/
+/* Table: cms_friendlink                                        */
+/*==============================================================*/
+create table cms_friendlink
+(
+   f_friendlink_id      int not null,
+   f_friendlinktype_id  int not null,
+   f_site_id            int not null,
+   f_name               varchar(100) not null comment '网站名称',
+   f_url                varchar(255) not null comment '网站地址',
+   f_seq                int not null default 2147483647 comment '排序',
+   f_logo               varchar(255) comment '网站Logo',
+   f_description        varchar(255) comment '网站描述',
+   f_email              varchar(100) comment '站长Email',
+   f_is_with_logo       char(1) not null default '0' comment '是否带Logo',
+   f_is_recommend       char(1) not null default '0' comment '是否推荐',
+   f_status             int not null default 0 comment '状态(0:已审核,1:未审核)',
+   primary key (f_friendlink_id)
+)
+engine = innodb;
+
+alter table cms_friendlink comment '友情链接表';
+
+/*==============================================================*/
+/* Table: cms_friendlink_type                                   */
+/*==============================================================*/
+create table cms_friendlink_type
+(
+   f_friendlinktype_id  int not null,
+   f_site_id            int not null,
+   f_name               varchar(100) not null comment '名称',
+   f_number             varchar(100) comment '编码',
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_friendlinktype_id)
+)
+engine = innodb;
+
+alter table cms_friendlink_type comment '友情链接类型表';
+
+/*==============================================================*/
+/* Table: cms_global                                            */
+/*==============================================================*/
+create table cms_global
+(
+   f_global_id          int not null,
+   f_protocol           varchar(50) not null default 'http' comment '协议',
+   f_port               int comment '服务端口号',
+   f_context_path       varchar(255) comment '上下文路径',
+   f_version            varchar(50) not null comment 'jspxcms版本号',
+   primary key (f_global_id)
+)
+engine = innodb;
+
+alter table cms_global comment '全局表';
+
+/*==============================================================*/
+/* Table: cms_global_custom                                     */
+/*==============================================================*/
+create table cms_global_custom
+(
+   f_global_id          int not null,
+   f_key                varchar(50) not null comment '键',
+   f_value              varchar(2000) comment '值'
+)
+engine = innodb;
+
+alter table cms_global_custom comment '全局自定义表';
+
+/*==============================================================*/
+/* Table: cms_guestbook                                         */
+/*==============================================================*/
+create table cms_guestbook
+(
+   f_guestbook_id       int not null,
+   f_site_id            int not null comment '站点',
+   f_guestbooktype_id   int not null comment '留言类型',
+   f_creator_id         int not null comment '创建者',
+   f_replyer_id         int comment '回复者',
+   f_title              varchar(150) comment '留言标题',
+   f_text               longtext comment '留言内容',
+   f_creation_date      datetime not null comment '留言日期',
+   f_creation_ip        varchar(100) not null comment '留言IP',
+   f_reply_text         longtext comment '回复内容',
+   f_reply_date         datetime comment '回复日期',
+   f_reply_ip           varchar(100) comment '回复IP',
+   f_is_reply           char(1) not null default '0' comment '是否回复',
+   f_is_recommend       char(1) not null default '0' comment '是否推荐',
+   f_status             int not null default 0 comment '状态(0:已审核,1:未审核,2:屏蔽)',
+   f_username           varchar(100) comment '用户名',
+   f_gender             char(1) comment '性别',
+   f_phone              varchar(100) comment '电话',
+   f_mobile             varchar(100) comment '手机',
+   f_qq                 varchar(100) comment 'QQ号码',
+   f_email              varchar(100) comment '电子邮箱',
+   primary key (f_guestbook_id)
+)
+engine = innodb;
+
+alter table cms_guestbook comment '留言板表';
+
+/*==============================================================*/
+/* Table: cms_guestbook_type                                    */
+/*==============================================================*/
+create table cms_guestbook_type
+(
+   f_guestbooktype_id   int not null,
+   f_site_id            int not null comment '站点',
+   f_name               varchar(100) not null comment '名称',
+   f_number             varchar(100) comment '编码',
+   f_seq                int not null default 2147483647 comment '排序',
+   f_description        varchar(255) comment '描述',
+   primary key (f_guestbooktype_id)
+)
+engine = innodb;
+
+alter table cms_guestbook_type comment '留言板类型表';
+
+/*==============================================================*/
+/* Table: cms_info                                              */
+/*==============================================================*/
+create table cms_info
+(
+   f_info_id            int not null,
+   f_org_id             int not null comment '组织',
+   f_creator_id         int not null comment '创建者',
+   f_site_id            int not null comment '站点',
+   f_node_id            int not null comment '节点',
+   f_publish_date       datetime not null comment '发布日期',
+   f_priority           tinyint not null default 0 comment '优先级',
+   f_is_with_image      char(1) not null default '0' comment '是否包含图片',
+   f_views              int not null default 0 comment '浏览总数',
+   f_downloads          int not null default 0 comment '下载总数',
+   f_comments           int not null default 0 comment '评论总数',
+   f_diggs              int not null default 0 comment '顶',
+   f_score              int not null default 0 comment '得分',
+   f_status             char(1) not null default 'A' comment '状态(0:发起者,1-9:审核中,A:已终审,B:草稿,C:投稿,D:退稿,E:采集,X:回收站,Z:归档)',
+   f_p1                 tinyint comment '自定义1',
+   f_p2                 tinyint comment '自定义2',
+   f_p3                 tinyint comment '自定义3',
+   f_p4                 tinyint comment '自定义4',
+   f_p5                 tinyint comment '自定义5',
+   f_p6                 tinyint comment '自定义6',
+   primary key (f_info_id)
+)
+engine = innodb;
+
+alter table cms_info comment '信息表';
+
+/*==============================================================*/
+/* Table: cms_info_attribute                                    */
+/*==============================================================*/
+create table cms_info_attribute
+(
+   f_infoattr_id        int not null,
+   f_info_id            int not null comment '信息',
+   f_attribute_id       int not null comment '属性',
+   f_image              varchar(255) comment '属性图片',
+   primary key (f_infoattr_id)
+)
+engine = innodb;
+
+alter table cms_info_attribute comment '信息与属性关联表';
+
+/*==============================================================*/
+/* Table: cms_info_buffer                                       */
+/*==============================================================*/
+create table cms_info_buffer
+(
+   f_info_id            int not null,
+   f_views              int not null default 0 comment '浏览次数',
+   f_downloads          int not null default 0 comment '下载次数',
+   f_comments           int not null default 0 comment '评论次数',
+   f_involveds          int not null default 0 comment '评论参与人数',
+   f_diggs              int not null default 0 comment '顶',
+   f_burys              int not null default 0 comment '踩',
+   f_score              int not null default 0 comment '得分',
+   primary key (f_info_id)
+)
+engine = innodb;
+
+alter table cms_info_buffer comment '信息缓冲表';
+
+/*==============================================================*/
+/* Table: cms_info_clob                                         */
+/*==============================================================*/
+create table cms_info_clob
+(
+   f_info_id            int not null,
+   f_key                varchar(50) not null comment '键',
+   f_value              longtext comment '值'
+)
+engine = innodb;
+
+alter table cms_info_clob comment '信息大字段表';
+
+/*==============================================================*/
+/* Table: cms_info_custom                                       */
+/*==============================================================*/
+create table cms_info_custom
+(
+   f_info_id            int not null,
+   f_key                varchar(50) not null comment '键',
+   f_value              varchar(2000) comment '值'
+)
+engine = innodb;
+
+alter table cms_info_custom comment '信息自定义表';
+
+/*==============================================================*/
+/* Table: cms_info_detail                                       */
+/*==============================================================*/
+create table cms_info_detail
+(
+   f_info_id            int not null,
+   f_title              varchar(150) not null comment '主标题',
+   f_subtitle           varchar(150) comment '副标题',
+   f_full_title         varchar(150) comment '完整标题',
+   f_link               varchar(255) comment '转向链接',
+   f_is_new_window      char(1) comment '是否在新窗口打开',
+   f_color              varchar(50) comment '颜色',
+   f_is_strong          char(1) not null default '0' comment '是否粗体',
+   f_is_em              char(1) not null default '0' comment '是否斜体',
+   f_info_path          varchar(255) comment '信息路径',
+   f_info_template      varchar(255) comment '信息模板',
+   f_meta_description   varchar(255) comment '描述',
+   f_source             varchar(50) comment '来源名称',
+   f_source_url         varchar(255) comment '来源url',
+   f_author             varchar(50) comment '作者',
+   f_small_image        varchar(255) comment '小图',
+   f_large_image        varchar(255) comment '大图',
+   f_video              varchar(255) comment '视频url',
+   f_video_name         varchar(255) comment '视频名称',
+   f_file               varchar(255) comment '文件url',
+   f_file_name          varchar(255) comment '文件名称',
+   f_file_length        bigint comment '文档长度',
+   primary key (f_info_id)
+)
+engine = innodb;
+
+alter table cms_info_detail comment '信息详细表';
+
+/*==============================================================*/
+/* Table: cms_info_file                                         */
+/*==============================================================*/
+create table cms_info_file
+(
+   f_info_id            int not null,
+   f_name               varchar(150) not null comment '文件名称',
+   f_length             bigint not null default 0 comment '文件长度',
+   f_file               varchar(255) not null comment '文件地址',
+   f_index              int not null default 0 comment '文件序号',
+   f_downloads          int not null default 0 comment '下载次数'
+)
+engine = innodb;
+
+alter table cms_info_file comment '信息附件集表';
+
+/*==============================================================*/
+/* Table: cms_info_image                                        */
+/*==============================================================*/
+create table cms_info_image
+(
+   f_info_id            int not null,
+   f_name               varchar(150) comment '图片名称',
+   f_image              varchar(255) comment '图片地址',
+   f_index              int not null default 0 comment '图片序号',
+   f_text               longtext comment '图片正文'
+)
+engine = innodb;
+
+alter table cms_info_image comment '信息图片集表';
+
+/*==============================================================*/
+/* Table: cms_info_node                                         */
+/*==============================================================*/
+create table cms_info_node
+(
+   f_infonode_id        int not null,
+   f_info_id            int not null comment '信息',
+   f_node_id            int not null comment '节点',
+   f_node_index         int not null default 0 comment '节点顺序',
+   primary key (f_infonode_id)
+)
+engine = innodb;
+
+alter table cms_info_node comment '信息与节点关联表';
+
+/*==============================================================*/
+/* Table: cms_info_special                                      */
+/*==============================================================*/
+create table cms_info_special
+(
+   f_infospecial_id     int not null,
+   f_info_id            int not null comment '信息',
+   f_special_id         int not null comment '专题',
+   f_special_index      int not null comment '专题序号',
+   primary key (f_infospecial_id)
+)
+engine = innodb;
+
+alter table cms_info_special comment '信息与专题关联表';
+
+/*==============================================================*/
+/* Table: cms_info_tag                                          */
+/*==============================================================*/
+create table cms_info_tag
+(
+   f_infotag_id         int not null,
+   f_info_id            int not null comment '信息',
+   f_tag_id             int not null comment 'tag',
+   f_tag_index          int not null comment 'tag序号',
+   primary key (f_infotag_id)
+)
+engine = innodb;
+
+alter table cms_info_tag comment '信息与tag关联表';
+
+/*==============================================================*/
+/* Table: cms_member_group                                      */
+/*==============================================================*/
+create table cms_member_group
+(
+   f_membergroup_id     int not null,
+   f_name               varchar(100) not null,
+   f_description        varchar(255),
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_membergroup_id)
+)
+engine = innodb;
+
+alter table cms_member_group comment '会员组表';
+
+/*==============================================================*/
+/* Table: cms_membergroup_site                                  */
+/*==============================================================*/
+create table cms_membergroup_site
+(
+   f_memgroupsite_id    int not null,
+   f_membergroup_id     int not null comment '会员组',
+   f_site_id            int not null comment '站点',
+   f_is_all_view        char(1) not null default '1' comment '所有浏览权限',
+   f_is_all_contri      char(1) not null default '0' comment '所有投稿权限',
+   f_is_all_exemption   char(1) not null default '0' comment '所有投稿免审核',
+   primary key (f_memgroupsite_id)
+)
+engine = innodb;
+
+alter table cms_membergroup_site comment '用户组站点表';
+
+/*==============================================================*/
+/* Table: cms_memgroupnode_contri                               */
+/*==============================================================*/
+create table cms_memgroupnode_contri
+(
+   f_mgroupncontri_id   int not null,
+   f_memgroupsite_id    int not null,
+   f_node_id            int not null,
+   primary key (f_mgroupncontri_id)
+)
+engine = innodb;
+
+alter table cms_memgroupnode_contri comment '会员组与投稿权限关联表';
+
+/*==============================================================*/
+/* Table: cms_memgroupnode_view                                 */
+/*==============================================================*/
+create table cms_memgroupnode_view
+(
+   f_mgroupnview_id     int not null,
+   f_memgroupsite_id    int not null,
+   f_node_id            int not null,
+   primary key (f_mgroupnview_id)
+)
+engine = innodb;
+
+alter table cms_memgroupnode_view comment '会员组与节点浏览权限关联表';
+
+/*==============================================================*/
+/* Table: cms_model                                             */
+/*==============================================================*/
+create table cms_model
+(
+   f_model_id           int not null,
+   f_site_id            int not null comment '站点',
+   f_type               varchar(100) not null comment '类型(info:信息,node:节点,node_home:首页;special:专题)',
+   f_name               varchar(50) not null comment '名称',
+   f_seq                int not null default 10 comment '顺序',
+   primary key (f_model_id)
+)
+engine = innodb;
+
+alter table cms_model comment '模型表';
+
+/*==============================================================*/
+/* Table: cms_model_custom                                      */
+/*==============================================================*/
+create table cms_model_custom
+(
+   f_model_id           int not null,
+   f_key                varchar(50) not null comment '键',
+   f_value              varchar(2000) comment '值'
+)
+engine = innodb;
+
+alter table cms_model_custom comment '模型自定义表';
+
+/*==============================================================*/
+/* Table: cms_model_field                                       */
+/*==============================================================*/
+create table cms_model_field
+(
+   f_modefiel_id        int not null,
+   f_model_id           int not null comment '模型',
+   f_type               int not null comment '输入类型',
+   f_inner_type         int not null default 0 comment '内部类型(0:用户自定义字段;1:系统定义字段;2:预留大文本字段;3:预留可查询字段)',
+   f_label              varchar(50) not null comment '字段标签',
+   f_name               varchar(50) not null comment '字段名称',
+   f_prompt             varchar(255) comment '提示信息',
+   f_def_value          varchar(255) comment '默认值',
+   f_is_required        char(1) not null default '0' comment '是否必填项',
+   f_seq                int not null default 10 comment '顺序',
+   f_is_dbl_column      char(1) not null default '0' comment '是否双列布局',
+   f_is_disabled        char(1) not null default '0' comment '是否禁用',
+   primary key (f_modefiel_id)
+)
+engine = innodb;
+
+alter table cms_model_field comment '模型字段表';
+
+/*==============================================================*/
+/* Table: cms_model_field_custom                                */
+/*==============================================================*/
+create table cms_model_field_custom
+(
+   f_modefiel_id        int not null,
+   f_key                varchar(50) not null comment '键',
+   f_value              varchar(2000) comment '值'
+)
+engine = innodb;
+
+alter table cms_model_field_custom comment '模型字段自定义信息表';
+
+/*==============================================================*/
+/* Table: cms_node                                              */
+/*==============================================================*/
+create table cms_node
+(
+   f_node_id            int not null,
+   f_site_id            int not null comment '站点',
+   f_parent_id          int comment '父节点',
+   f_creator_id         int not null comment '创建者',
+   f_node_model_id      int not null comment '节点模型',
+   f_workflow_id        int comment '流程',
+   f_domain             varchar(100) comment '绑定域名',
+   f_domain_path        varchar(100) comment '绑定目录',
+   f_info_model_id      int comment '信息模型',
+   f_number             varchar(100) comment '编码',
+   f_name               varchar(150) not null comment '名称',
+   f_tree_number        varchar(100) not null default '0000' comment '树编码',
+   f_tree_level         int not null default 0 comment '树级别',
+   f_tree_max           varchar(10) not null default '0000' comment '树子节点最大编码',
+   f_creation_date      datetime not null comment '创建时间',
+   f_refers             int not null default 0 comment '信息数量',
+   f_views              int not null default 0 comment '浏览总数',
+   f_is_real_node       char(1) not null default '1' comment '是否真实节点',
+   f_is_hidden          char(1) not null default '0' comment '是否隐藏',
+   f_p1                 tinyint comment '自定义1',
+   f_p2                 tinyint comment '自定义2',
+   f_p3                 tinyint comment '自定义3',
+   f_p4                 tinyint comment '自定义4',
+   f_p5                 tinyint comment '自定义5',
+   f_p6                 tinyint comment '自定义6',
+   primary key (f_node_id)
+)
+engine = innodb;
+
+alter table cms_node comment '节点表';
+
+/*==============================================================*/
+/* Table: cms_node_buffer                                       */
+/*==============================================================*/
+create table cms_node_buffer
+(
+   f_node_id            int not null,
+   f_views              int not null comment '浏览次数',
+   primary key (f_node_id)
+)
+engine = innodb;
+
+alter table cms_node_buffer comment '节点缓冲表';
+
+/*==============================================================*/
+/* Table: cms_node_clob                                         */
+/*==============================================================*/
+create table cms_node_clob
+(
+   f_node_id            int not null,
+   f_key                varchar(50) not null comment '键',
+   f_value              longtext comment '值'
+)
+engine = innodb;
+
+alter table cms_node_clob comment '节点大字段表';
+
+/*==============================================================*/
+/* Table: cms_node_custom                                       */
+/*==============================================================*/
+create table cms_node_custom
+(
+   f_node_id            int not null,
+   f_key                varchar(50) not null comment '键',
+   f_value              varchar(2000) comment '值'
+)
+engine = innodb;
+
+alter table cms_node_custom comment '节点自定义表';
+
+/*==============================================================*/
+/* Table: cms_node_detail                                       */
+/*==============================================================*/
+create table cms_node_detail
+(
+   f_node_id            int not null,
+   f_link               varchar(255) comment '转向链接',
+   f_meta_keywords      varchar(150) comment '关键字',
+   f_meta_description   varchar(255) comment '描述',
+   f_is_new_window      char(1) comment '是否在新窗口打开',
+   f_node_template      varchar(255) comment '节点模板',
+   f_info_template      varchar(255) comment '信息模板',
+   f_is_generate_node   char(1) comment '是否生成节点页',
+   f_is_generate_info   char(1) comment '是否生成信息页',
+   f_node_extension     varchar(10) comment '节点页扩展名',
+   f_info_extension     varchar(10) comment '信息页扩展名',
+   f_node_path          varchar(100) comment '节点路径',
+   f_info_path          varchar(100) comment '信息路径',
+   f_is_def_page        char(1) comment '是否默认页',
+   f_static_method      int comment '静态页生成方式(0:手动生成;1:自动生成节点页;2:自动生成信息页及节点页;3:自动生成信息页、节点页、父节点页、首页)',
+   f_static_page        int comment '节点列表静态化页数',
+   f_small_image        varchar(255) comment '小图',
+   f_large_image        varchar(255) comment '大图',
+   primary key (f_node_id)
+)
+engine = innodb;
+
+alter table cms_node_detail comment '节点详细表';
+
+/*==============================================================*/
+/* Table: cms_org                                               */
+/*==============================================================*/
+create table cms_org
+(
+   f_org_id             int not null,
+   f_parent_id          int comment '上级组织',
+   f_name               varchar(150) not null comment '名称',
+   f_full_name          varchar(150) comment '全称',
+   f_description        varchar(255) comment '描述',
+   f_number             varchar(100) comment '编码',
+   f_phone              varchar(100) comment '电话',
+   f_fax                varchar(100) comment '传真',
+   f_address            varchar(255) comment '地址',
+   f_tree_number        varchar(100) not null default '0000' comment '树编码',
+   f_tree_level         int not null default 0 comment '树级别',
+   f_tree_max           varchar(10) not null default '0000' comment '树子节点最大编码',
+   primary key (f_org_id)
+)
+engine = innodb;
+
+alter table cms_org comment '组织表';
+
+/*==============================================================*/
+/* Table: cms_role                                              */
+/*==============================================================*/
+create table cms_role
+(
+   f_role_id            int not null,
+   f_site_id            int not null comment '站点',
+   f_name               varchar(100) not null comment '名称',
+   f_description        varchar(255) comment '描述',
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_role_id)
+)
+engine = innodb;
+
+alter table cms_role comment '角色表';
+
+/*==============================================================*/
+/* Table: cms_role_site                                         */
+/*==============================================================*/
+create table cms_role_site
+(
+   f_rolesite_id        int not null,
+   f_site_id            int not null,
+   f_role_id            int not null,
+   f_perms              longtext comment '功能权限',
+   f_is_all_perm        char(1) not null default '0' comment '所有功能权限',
+   f_is_all_node        char(1) not null default '0' comment '所有节点权限',
+   f_is_all_info        char(1) not null default '0' comment '所有信息权限',
+   f_info_right_type    int not null default 1 comment '信息权限类型(1:所有;2:组织;3:自身)',
+   primary key (f_rolesite_id)
+)
+engine = innodb;
+
+alter table cms_role_site comment '角色站点表';
+
+/*==============================================================*/
+/* Table: cms_rolenode_info                                     */
+/*==============================================================*/
+create table cms_rolenode_info
+(
+   f_roleninfo_id       int not null,
+   f_rolesite_id        int not null,
+   f_node_id            int not null,
+   primary key (f_roleninfo_id)
+)
+engine = innodb;
+
+alter table cms_rolenode_info comment '角色与信息权限关联表';
+
+/*==============================================================*/
+/* Table: cms_rolenode_node                                     */
+/*==============================================================*/
+create table cms_rolenode_node
+(
+   f_rolennode_id       int not null,
+   f_rolesite_id        int not null,
+   f_node_id            int not null,
+   primary key (f_rolennode_id)
+)
+engine = innodb;
+
+alter table cms_rolenode_node comment '角色与节点权限关联表';
+
+/*==============================================================*/
+/* Table: cms_score_board                                       */
+/*==============================================================*/
+create table cms_score_board
+(
+   f_scoreboard_id      int not null,
+   f_scoreitem_id       int not null comment '记分项',
+   f_ftype              varchar(50) not null comment '外表标识',
+   f_fid                int not null comment '外表ID',
+   f_votes              int not null default 0 comment '投票次数',
+   primary key (f_scoreboard_id)
+)
+engine = innodb;
+
+alter table cms_score_board comment '计分牌表';
+
+/*==============================================================*/
+/* Table: cms_score_group                                       */
+/*==============================================================*/
+create table cms_score_group
+(
+   f_scoregroup_id      int not null,
+   f_site_id            int not null comment '站点',
+   f_name               varchar(100) not null comment '名称',
+   f_number             varchar(100) comment '编码',
+   f_description        varchar(255) comment '描述',
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_scoregroup_id)
+)
+engine = innodb;
+
+alter table cms_score_group comment '计分组表';
+
+/*==============================================================*/
+/* Table: cms_score_item                                        */
+/*==============================================================*/
+create table cms_score_item
+(
+   f_scoreitem_id       int not null,
+   f_scoregroup_id      int not null comment '计分组',
+   f_site_id            int not null comment '站点',
+   f_name               varchar(100) not null comment '名称',
+   f_score              int not null default 1 comment '分值',
+   f_icon               varchar(255) comment '图标',
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_scoreitem_id)
+)
+engine = innodb;
+
+alter table cms_score_item comment '计分项表';
+
+/*==============================================================*/
+/* Table: cms_sensitive_word                                    */
+/*==============================================================*/
+create table cms_sensitive_word
+(
+   f_sensitiveword_id   int not null,
+   f_name               varchar(100) not null comment '敏感词',
+   f_replacement        varchar(100) comment '替换词',
+   f_status             int not null default 0 comment '状态(0:启用,1:禁用)',
+   primary key (f_sensitiveword_id)
+)
+engine = innodb;
+
+alter table cms_sensitive_word comment '敏感词表';
+
+/*==============================================================*/
+/* Table: cms_site                                              */
+/*==============================================================*/
+create table cms_site
+(
+   f_site_id            int not null,
+   f_global_id          int not null comment '全局',
+   f_org_id             int not null comment '组织',
+   f_parent_id          int comment '上级站点',
+   f_name               varchar(100) not null comment '名称',
+   f_number             varchar(100) comment '编码',
+   f_full_name          varchar(100) comment '完整名称',
+   f_html_path          varchar(100) comment 'html路径',
+   f_domain             varchar(100) not null default 'localhost' comment '域名',
+   f_is_with_domain     char(1) not null default '0' comment '是否URL包含域名',
+   f_template_theme     varchar(100) not null default 'default' comment '模板主题',
+   f_no_picture         varchar(255) not null default '/img/no_picture.jpg' comment '暂无图片',
+   f_tree_number        varchar(100) not null default '0000' comment '树编码',
+   f_tree_level         int not null default 0 comment '树级别',
+   f_tree_max           varchar(10) not null default '0000' comment '树子节点最大编码',
+   primary key (f_site_id)
+)
+engine = innodb;
+
+alter table cms_site comment '站点表';
+
+/*==============================================================*/
+/* Table: cms_site_custom                                       */
+/*==============================================================*/
+create table cms_site_custom
+(
+   f_site_id            int not null,
+   f_key                varchar(50) comment '键',
+   f_value              varchar(2000) comment '值'
+)
+engine = innodb;
+
+alter table cms_site_custom comment '站点自定义表';
+
+/*==============================================================*/
+/* Table: cms_special                                           */
+/*==============================================================*/
+create table cms_special
+(
+   f_special_id         int not null,
+   f_creator_id         int not null comment '创建者',
+   f_site_id            int not null comment '站点',
+   f_speccate_id        int not null comment '专题类别',
+   f_creation_date      datetime not null comment '创建日期',
+   f_title              varchar(150) not null comment '标题',
+   f_meta_keywords      varchar(150) comment '关键字',
+   f_meta_description   varchar(255) comment '描述',
+   f_small_image        varchar(255) comment '小图',
+   f_large_image        varchar(255) comment '大图',
+   f_video              varchar(255) comment '视频',
+   f_refers             int not null default 0 comment '信息数量',
+   f_views              int not null default 0 comment '浏览总数',
+   f_is_with_image      char(1) not null default '0' comment '是否有图片',
+   f_is_recommend       char(1) not null default '0' comment '是否推荐',
+   primary key (f_special_id)
+)
+engine = innodb;
+
+alter table cms_special comment '专题表';
+
+/*==============================================================*/
+/* Table: cms_special_category                                  */
+/*==============================================================*/
+create table cms_special_category
+(
+   f_speccate_id        int not null,
+   f_site_id            int not null comment '站点',
+   f_name               varchar(50) not null comment '名称',
+   f_seq                int not null default 2147483647 comment '排序',
+   f_views              int not null default 0 comment '浏览总数',
+   f_meta_keywords      varchar(150) comment '关键字',
+   f_meta_description   varchar(255) comment '描述',
+   f_creation_date      datetime not null comment '创建日期',
+   primary key (f_speccate_id)
+)
+engine = innodb;
+
+alter table cms_special_category comment '专题类别表';
+
+/*==============================================================*/
+/* Table: cms_special_custom                                    */
+/*==============================================================*/
+create table cms_special_custom
+(
+   f_special_id         int not null,
+   f_name               varchar(50) comment '键',
+   f_value              varchar(2000) comment '值'
+)
+engine = innodb;
+
+alter table cms_special_custom comment '专题自定义表';
+
+/*==============================================================*/
+/* Table: cms_tag                                               */
+/*==============================================================*/
+create table cms_tag
+(
+   f_tag_id             int not null,
+   f_site_id            int not null comment '站点',
+   f_name               varchar(50) not null comment '名称',
+   f_creation_date      datetime not null comment '创建日期',
+   f_refers             int not null default 0 comment '信息数量',
+   primary key (f_tag_id)
+)
+engine = innodb;
+
+alter table cms_tag comment 'TAG表';
+
+/*==============================================================*/
+/* Table: cms_user                                              */
+/*==============================================================*/
+create table cms_user
+(
+   f_user_id            int not null,
+   f_org_id             int not null comment '组织',
+   f_membergroup_id     int not null comment '会员组',
+   f_username           varchar(50) not null comment '用户名',
+   f_password           varchar(128) comment '密码',
+   f_salt               varchar(32) comment '加密混淆码',
+   f_email              varchar(100) comment '电子邮箱',
+   f_mobile             varchar(100) comment '手机',
+   f_gender             char(1) comment '性别',
+   f_birth_date         datetime comment '出生年月',
+   f_validation_type    varchar(50) comment '验证类型(用户激活,重置密码,邮箱激活)',
+   f_validation_key     varchar(100) comment '验证KEY',
+   f_rank               int not null default 999 comment '等级',
+   f_type               int not null default 0 comment '类型(0:会员,1:管理员)',
+   f_status             int not null default 0 comment '状态(0:正常,1:锁定,2:待验证)',
+   primary key (f_user_id),
+   unique key ak_username (f_username)
+)
+engine = innodb;
+
+alter table cms_user comment '用户表';
+
+/*==============================================================*/
+/* Table: cms_user_detail                                       */
+/*==============================================================*/
+create table cms_user_detail
+(
+   f_user_id            int not null,
+   f_validation_date    datetime comment '验证生成时间',
+   f_validation_value   varchar(255) comment '验证值',
+   f_login_error_date   datetime comment '登录错误时间',
+   f_login_error_count  int not null default 0 comment '登录错误次数',
+   f_prev_login_date    datetime comment '上次登录日期',
+   f_prev_login_ip      varchar(100) comment '上次登录IP',
+   f_last_login_date    datetime comment '最后登录日期',
+   f_last_login_ip      varchar(100) comment '最后登录IP',
+   f_creation_date      datetime not null comment '加入日期',
+   f_creation_ip        varchar(100) not null comment '加入IP',
+   f_logins             int not null default 0 comment '登录次数',
+   f_real_name          varchar(100) comment '用户实名',
+   f_avatar             varchar(255) comment '头像',
+   f_bio                varchar(255) comment '自我介绍',
+   f_come_from          varchar(100) comment '来自',
+   f_qq                 varchar(100) comment 'QQ',
+   f_msn                varchar(100) comment 'MSN',
+   f_weixin             varchar(100) comment '微信',
+   primary key (f_user_id)
+)
+engine = innodb;
+
+alter table cms_user_detail comment '用户详细信息表';
+
+/*==============================================================*/
+/* Table: cms_user_role                                         */
+/*==============================================================*/
+create table cms_user_role
+(
+   f_userrole_id        int not null,
+   f_user_id            int not null,
+   f_role_id            int not null,
+   f_role_index         int not null default 0 comment '角色顺序',
+   primary key (f_userrole_id)
+)
+engine = innodb;
+
+alter table cms_user_role comment '用户与角色关联表';
+
+/*==============================================================*/
+/* Table: cms_vote                                              */
+/*==============================================================*/
+create table cms_vote
+(
+   f_vote_id            int not null,
+   f_site_id            int not null,
+   f_title              varchar(150) not null comment '标题',
+   f_number             varchar(100) comment '编码',
+   f_description        varchar(255) comment '描述',
+   f_begin_date         datetime comment '开始日期',
+   f_end_date           datetime comment '结束日期',
+   f_interval           int not null default 0 comment '间隔时间（天）',
+   f_max_selected       int not null default 1 comment '最多可选几项(0不限制)',
+   f_mode               int not null default 1 comment '模式(1:独立访客,2:独立IP,3:独立用户)',
+   f_total              int not null default 0 comment '总票数',
+   f_seq                int not null default 2147483647 comment '排序',
+   f_status             int not null default 0 comment '状态(0:启用,1:禁用)',
+   primary key (f_vote_id)
+)
+engine = innodb;
+
+alter table cms_vote comment '投票表';
+
+/*==============================================================*/
+/* Table: cms_vote_mark                                         */
+/*==============================================================*/
+create table cms_vote_mark
+(
+   f_votemark_id        int not null,
+   f_ftype              varchar(50) not null comment '外表标识',
+   f_fid                int not null comment '外表ID',
+   f_date               datetime not null comment '日期',
+   f_user_id            int comment '用户',
+   f_ip                 varchar(100) not null comment 'IP',
+   f_cookie             varchar(100) not null comment 'Cookie',
+   primary key (f_votemark_id)
+)
+engine = innodb;
+
+alter table cms_vote_mark comment '投票标记表';
+
+/*==============================================================*/
+/* Table: cms_vote_option                                       */
+/*==============================================================*/
+create table cms_vote_option
+(
+   f_voteoption_id      int not null,
+   f_vote_id            int not null,
+   f_title              varchar(150) not null comment '标题',
+   f_count              int not null default 0 comment '得票数',
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_voteoption_id)
+)
+engine = innodb;
+
+alter table cms_vote_option comment '投票项表';
+
+/*==============================================================*/
+/* Table: cms_workflow                                          */
+/*==============================================================*/
+create table cms_workflow
+(
+   f_workflow_id        int not null,
+   f_workflowgroup_id   int not null comment '工作流',
+   f_site_id            int not null comment '站点',
+   f_name               varchar(100) not null comment '名称',
+   f_description        varchar(255) comment '描述',
+   f_seq                int not null default 2147483647 comment '排序',
+   f_status             int not null default 1 comment '状态(1:启用;2:禁用)',
+   primary key (f_workflow_id)
+)
+engine = innodb;
+
+alter table cms_workflow comment '工作流表';
+
+/*==============================================================*/
+/* Table: cms_workflow_group                                    */
+/*==============================================================*/
+create table cms_workflow_group
+(
+   f_workflowgroup_id   int not null,
+   f_site_id            int not null comment '站点',
+   f_name               varchar(100) not null comment '名称',
+   f_description        varchar(255) comment '描述',
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_workflowgroup_id)
+)
+engine = innodb;
+
+alter table cms_workflow_group comment '工作流组表';
+
+/*==============================================================*/
+/* Table: cms_workflow_log                                      */
+/*==============================================================*/
+create table cms_workflow_log
+(
+   f_workflowlog_id     int not null,
+   f_user_id            int not null comment '操作人',
+   f_site_id            int not null comment '站点',
+   f_workflowprocess_id int not null comment '过程',
+   f_from               varchar(100) not null comment '从哪',
+   f_to                 varchar(100) not null comment '到哪',
+   f_creation_date      datetime not null comment '创建时间',
+   f_opinion            varchar(255) comment '意见',
+   f_type               int not null comment '类型(1:前进;2后退:;3:原地)',
+   primary key (f_workflowlog_id)
+)
+engine = innodb;
+
+alter table cms_workflow_log comment '工作流流程日志表';
+
+/*==============================================================*/
+/* Table: cms_workflow_process                                  */
+/*==============================================================*/
+create table cms_workflow_process
+(
+   f_workflowprocess_id int not null,
+   f_site_id            int not null comment '站点',
+   f_workflow_id        int not null comment '流程',
+   f_user_id            int not null comment '发起人',
+   f_data_id            int not null comment '数据ID',
+   f_begin_date         datetime not null comment '开始时间',
+   f_end_date           datetime comment '结束时间',
+   f_step               int not null comment '步骤',
+   f_type               int not null default 0 comment '类型(0:默认,1:信息)',
+   f_is_rejection       char(1) not null default '0' comment '是否退回',
+   f_is_end             char(1) not null default '0' comment '是否终点',
+   primary key (f_workflowprocess_id)
+)
+engine = innodb;
+
+alter table cms_workflow_process comment '工作流过程表';
+
+/*==============================================================*/
+/* Table: cms_workflow_step                                     */
+/*==============================================================*/
+create table cms_workflow_step
+(
+   f_workflowstep_id    int not null,
+   f_workflow_id        int not null comment '工作流',
+   f_name               varchar(100) not null comment '名称',
+   f_seq                int not null default 2147483647 comment '排序',
+   primary key (f_workflowstep_id)
+)
+engine = innodb;
+
+alter table cms_workflow_step comment '工作流步骤表';
+
+/*==============================================================*/
+/* Table: cms_workflowprocess_user                              */
+/*==============================================================*/
+create table cms_workflowprocess_user
+(
+   f_wfprocuser_id      int not null,
+   f_user_id            int not null,
+   f_workflowprocess_id int not null,
+   primary key (f_wfprocuser_id)
+)
+engine = innodb;
+
+alter table cms_workflowprocess_user comment '流程与用户关联表';
+
+/*==============================================================*/
+/* Table: cms_workflowstep_role                                 */
+/*==============================================================*/
+create table cms_workflowstep_role
+(
+   f_wfsteprole_id      int not null,
+   f_role_id            int not null,
+   f_workflowstep_id    int not null,
+   primary key (f_wfsteprole_id)
+)
+engine = innodb;
+
+alter table cms_workflowstep_role comment '审核步骤与角色关联表';
+
+/*==============================================================*/
+/* Table: t_id_table                                            */
+/*==============================================================*/
+create table t_id_table
+(
+   f_table              varchar(100) not null comment '表名',
+   f_id_value           bigint not null comment 'ID值',
+   primary key (f_table)
+)
+engine = innodb;
+
+alter table t_id_table comment '主键表';
